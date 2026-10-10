@@ -135,6 +135,31 @@
   .sc-fig{background:#fff;border-radius:var(--radius-card);padding:clamp(10px,1.4vw,18px)}
   .sc-fig img{width:100%;height:auto}
   .sc-fig-sq{max-width:420px}
+  .wfig.live{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;color:#1d1d1f;letter-spacing:0}
+  .wp{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto;margin:0;min-width:0}
+  .wp figcaption{grid-column:1/-1;margin-bottom:8px;line-height:1.25}
+  .wp figcaption b{display:block;font-size:14px;font-weight:600;letter-spacing:-0.01em}
+  .wp figcaption span{display:block;font-size:11.5px;color:#6e6e73;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wp-plot{position:relative;aspect-ratio:2/1;border-radius:6px;overflow:hidden;background:#f7f7f7}
+  .wp-plot canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .wp-plot i{position:absolute;font-size:11px;color:#86868b;font-style:italic;line-height:1}
+  .wp-plot .ax-p{left:6px;top:5px}
+  .wp-plot .ax-q{right:7px;bottom:5px}
+  .wp-y{position:relative;width:30px;margin-right:6px}
+  .wp-x{position:relative;height:18px;margin-top:5px}
+  .wp-y span,.wp-x span{position:absolute;font-size:10px;line-height:1;color:#6e6e73;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .wp-y span{right:0;transform:translateY(-50%)}
+  .wp-x span{top:0;transform:translateX(-50%)}
+  .wp-y span::after{content:"";position:absolute;right:-6px;top:50%;width:3px;height:1px;background:#c7c7cc}
+  .wp-x span::before{content:"";position:absolute;left:50%;top:-5px;width:1px;height:3px;background:#c7c7cc}
+  .wfig.compact{gap:12px 12px}
+  .wp figcaption .short,.wfig.compact .wp figcaption .full{display:none}
+  .wfig.compact .wp figcaption .short{display:block}
+  .wfig.compact .wp figcaption b{font-size:12.5px}
+  .wfig.compact .wp figcaption span{font-size:10.5px}
+  .wfig.compact .wp-y{width:24px;margin-right:5px}
+  .wfig.compact .wp-y span,.wfig.compact .wp-x span{font-size:9px}
+  .wfig.compact .odd{color:transparent}
   .sc-k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-top:22px}
   .sc-panel h3{font-size:clamp(22px,2.2vw,28px);font-weight:600;line-height:1.14;letter-spacing:.006em;margin-top:8px}
   .sc-panel p:not(.sc-k){font-size:15px;line-height:1.5;color:#a1a1a6;margin-top:10px}
@@ -500,7 +525,7 @@
 
     <div class="sc-panels">
       <article class="sc-panel" data-step="0">
-        <div class="sc-fig"><img src="img/fig-breeding-wigner.webp" alt="Four Wigner functions: squeezed vacuum, cat state, bred cat with three peaks, and a GKP-like state with five peaks spaced by two root pi" width="2394" height="1434"></div>
+        <div class="sc-fig wfig" data-wfig role="img" aria-label="Four Wigner functions: squeezed vacuum, cat state, bred cat with three peaks, and a GKP-like state with five peaks spaced by two root pi"><img src="img/fig-breeding-wigner.webp" alt="" width="2394" height="1434"></div>
         <p class="sc-k">01 · Phase space</p>
         <h3>From squeezed light to a GKP grid.</h3>
         <p>Wigner functions (blue positive, red negative) of a squeezed vacuum, a squeezed cat, and the outputs of one and two breeding rounds. Two rounds place five peaks exactly on the 2√π lattice with weights 1 : 4 : 6 : 4 : 1.</p>
@@ -917,6 +942,7 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
 <script src="js/hero.js"></script>
 <script src="js/wigner-core.js"></script>
+<script src="js/wfig.js"></script>
 <script src="js/playground.js"></script>
 <script src="js/moments.js"></script>
 <script src="js/guestbook.js"></script>
