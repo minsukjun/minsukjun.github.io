@@ -250,6 +250,42 @@
   .mo-lb-btn:hover,.mo-x:hover{background:rgba(255,255,255,.26)}
   .mo-x{position:absolute;top:18px;right:18px}
 
+  /* ---------- Guestbook ---------- */
+  .gb[hidden],.gb-nav[hidden]{display:none}
+  .gb-grid{display:grid;grid-template-columns:380px 1fr;gap:40px;align-items:start}
+  .gb-form{background:var(--parchment);border-radius:var(--radius-card);padding:28px;display:flex;flex-direction:column;gap:18px;position:sticky;top:72px}
+  .gb-f{display:flex;flex-direction:column;gap:8px;position:relative}
+  .gb-f span{font-size:14px;font-weight:600}
+  .gb-f input,.gb-f textarea{font:inherit;font-size:17px;color:var(--ink);background:var(--white);border:1px solid #d2d2d7;border-radius:12px;padding:12px 14px;outline:none;resize:vertical;transition:border-color .2s,box-shadow .2s}
+  .gb-f input:focus,.gb-f textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,102,204,.15)}
+  .gb-count{position:absolute;right:12px;bottom:10px;font-style:normal;font-size:12px;color:var(--ink-48);pointer-events:none}
+  .gb-sw{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+  .gb-sw input{position:absolute;opacity:0;width:1px;height:1px}
+  .gb-sw i{flex:none;width:51px;height:31px;border-radius:16px;background:#e9e9eb;position:relative;transition:background .25s}
+  .gb-sw i::after{content:"";position:absolute;left:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .25s}
+  .gb-sw input:checked+i{background:#34c759}
+  .gb-sw input:checked+i::after{transform:translateX(20px)}
+  .gb-sw input:focus-visible+i{box-shadow:0 0 0 4px rgba(0,102,204,.25)}
+  .gb-sw span{font-size:14px;color:var(--ink-muted);line-height:1.35}
+  .gb-sw b{display:block;color:var(--ink);font-weight:600}
+  .gb-ts:empty{display:none}
+  .gb-send{align-self:flex-start;border:none;cursor:pointer;font:inherit;font-size:17px}
+  .gb-send:disabled{opacity:.5;cursor:default}
+  .gb-msg{min-height:1.4em;font-size:14px;color:var(--ink-muted)}
+  .gb-msg.ok{color:#1d8a3a}
+  .gb-msg.err{color:#e30000}
+  .gb-list{display:flex;flex-direction:column;gap:14px}
+  .gb-empty{font-size:15px;color:var(--ink-muted);padding:20px 0}
+  .gb-card{border:1px solid var(--hairline);border-radius:var(--radius-card);padding:20px 22px}
+  .gb-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+  .gb-name{font-size:17px;font-weight:600}
+  .gb-date{font-size:12px;color:var(--ink-48);white-space:nowrap}
+  .gb-text{font-size:15px;line-height:1.55;color:var(--ink);margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere}
+  .gb-lock{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-muted);margin-top:8px}
+  .gb-lock svg{width:14px;height:14px;fill:currentColor}
+  .gb-reply{margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--parchment);font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+  .gb-reply b{display:block;font-size:12px;color:var(--blue);font-weight:600;margin-bottom:2px}
+
   /* ---------- Logos ---------- */
   .logo{width:56px;height:56px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;border:1px solid var(--hairline)}
   .logo img{width:78%;height:78%;object-fit:contain}
@@ -313,6 +349,8 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width:860px){
+    .gb-grid{grid-template-columns:1fr;gap:28px}
+    .gb-form{position:static;padding:22px}
     .mo-card{width:250px}
     .mo-card.wide{width:min(445px,calc(100vw - 56px))}
     .mo-img{height:334px}
@@ -376,6 +414,7 @@
       <a href="#projects">Projects</a>
       <a href="#moments">Moments</a>
       <a href="#skills">Skills</a>
+      <a href="#guestbook" class="gb-nav" hidden>Guestbook</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -823,6 +862,28 @@
   </div>
 </section>
 
+<!-- ============ GUESTBOOK ============ -->
+<section id="guestbook" class="s-white gb" data-api="https://api.minsukjun.com" data-sitekey="" hidden>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Guestbook</p>
+      <h2 class="h-section">Leave a note.</h2>
+      <p class="lead">Say hello, ask a question, or leave a private message. Notes appear after a quick review.</p>
+    </div>
+    <div class="gb-grid">
+      <form class="gb-form reveal" novalidate>
+        <label class="gb-f"><span>Name</span><input name="name" maxlength="30" autocomplete="nickname" required></label>
+        <label class="gb-f"><span>Message</span><textarea name="message" maxlength="300" rows="5" required></textarea><em class="gb-count">0 / 300</em></label>
+        <label class="gb-sw"><input type="checkbox" name="secret"><i aria-hidden="true"></i><span><b>Private</b>Only Minsuk can read it.</span></label>
+        <div class="gb-ts"></div>
+        <button type="submit" class="btn-pill gb-send">Send note</button>
+        <p class="gb-msg" aria-live="polite"></p>
+      </form>
+      <div class="gb-list reveal" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="s-black contact">
   <div class="wrap">
@@ -858,5 +919,6 @@
 <script src="js/wigner-core.js"></script>
 <script src="js/playground.js"></script>
 <script src="js/moments.js"></script>
+<script src="js/guestbook.js"></script>
 </body>
 </html>

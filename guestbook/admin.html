@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guestbook Admin</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{--ink:#1d1d1f;--muted:#6e6e73;--line:#e0e0e0;--parch:#f5f5f7;--blue:#0066cc;--green:#1d8a3a;--red:#e30000;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Helvetica Neue",Arial,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:var(--parch);font-size:15px;line-height:1.47;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 16px 80px}
+  h1{font-size:32px;font-weight:600;letter-spacing:-0.01em}
+  .sub{color:var(--muted);margin-top:6px}
+  .login{margin-top:28px;display:flex;gap:10px;max-width:460px}
+  input,textarea{font:inherit;font-size:16px;border:1px solid #d2d2d7;border-radius:12px;padding:11px 14px;background:#fff;color:var(--ink);outline:none;width:100%}
+  input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,102,204,.15)}
+  button{font:inherit;font-size:14px;border-radius:980px;padding:8px 16px;border:1px solid #d2d2d7;background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap}
+  button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  button.danger{color:var(--red)}
+  button:disabled{opacity:.4}
+  .bar{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:12px;flex-wrap:wrap}
+  .tabs{display:flex;gap:6px}
+  .tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .msg{min-height:1.4em;color:var(--muted);margin-top:10px}
+  .list{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+  .card{background:#fff;border-radius:18px;padding:18px 20px}
+  .head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+  .name{font-weight:600;font-size:16px}
+  .meta{font-size:12px;color:var(--muted)}
+  .tag{display:inline-block;font-size:11px;font-weight:600;border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:middle}
+  .tag.pend{background:#fff4d6;color:#8a5a00}
+  .tag.priv{background:#ece9ff;color:#4b39c6}
+  .text{margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere}
+  .reply{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+  .reply textarea{font-size:14px;min-height:60px;resize:vertical}
+  .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .empty{color:var(--muted);padding:24px 0}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Guestbook</h1>
+  <p class="sub">Approve, reply to, hide or delete notes. Private notes are only visible here.</p>
+
+  <form class="login" id="login" autocomplete="off">
+    <input type="password" id="tok" placeholder="Admin token" aria-label="Admin token">
+    <button class="primary" type="submit">Sign in</button>
+  </form>
+
+  <div id="app" hidden>
+    <div class="bar">
+      <div class="tabs" role="tablist">
+        <button type="button" data-f="pending" class="on">Pending</button>
+        <button type="button" data-f="published">Published</button>
+        <button type="button" data-f="all">All</button>
+      </div>
+      <div><button type="button" id="refresh">Refresh</button> <button type="button" id="out">Sign out</button></div>
+    </div>
+    <p class="msg" id="msg"></p>
+    <div class="list" id="list"></div>
+  </div>
+</div>
+<script>
+(function () {
+  var API = 'https://api.minsukjun.com', token = '', filter = 'pending', data = [];
+  var $ = function (id) { return document.getElementById(id); };
+  try { token = sessionStorage.getItem('gb-admin') || ''; } catch (e) {}
+
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function btn(label, cls, fn) { var b = el('button', cls, label); b.type = 'button'; b.addEventListener('click', fn); return b; }
+  function say(t) { $('msg').textContent = t; }
+  function req(method, path, body) {
+    return fetch(API + path, { method: method, headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined })
+      .then(function (r) { if (r.status === 401) throw new Error('auth'); if (!r.ok) throw new Error('http'); return r.json(); });
+  }
+  function load() {
+    say('Loading…');
+    return req('GET', '/api/admin/entries').then(function (d) {
+      data = d.entries || []; $('login').hidden = true; $('app').hidden = false; render();
+      var n = data.filter(function (e) { return !e.approved; }).length; say(n ? n + ' waiting for review.' : 'All caught up.');
+    }).catch(function (e) {
+      if (e.message === 'auth') { token = ''; try { sessionStorage.removeItem('gb-admin'); } catch (_) {} $('login').hidden = false; $('app').hidden = true; say(''); alertLogin(); }
+      else say('Could not reach the API.');
+    });
+  }
+  function alertLogin() { var t = $('tok'); t.value = ''; t.placeholder = 'Wrong token, try again'; t.focus(); }
+  function act(id, body) { return req('POST', '/api/admin/entries/' + id, body).then(load).catch(function () { say('Action failed.'); }); }
+  function render() {
+    var L = $('list'); L.textContent = '';
+    var rows = data.filter(function (e) { return filter === 'all' || (filter === 'pending' ? !e.approved : e.approved); });
+    if (!rows.length) { L.appendChild(el('p', 'empty', 'Nothing here.')); return; }
+    rows.forEach(function (e) {
+      var c = el('article', 'card'), h = el('div', 'head'), left = el('div');
+      left.appendChild(el('span', 'name', e.name));
+      if (!e.approved) left.appendChild(el('span', 'tag pend', 'Pending'));
+      if (e.secret) left.appendChild(el('span', 'tag priv', 'Private'));
+      h.appendChild(left); h.appendChild(el('span', 'meta', new Date(e.created_at).toLocaleString()));
+      c.appendChild(h); c.appendChild(el('p', 'text', e.message));
+      var rp = el('div', 'reply'), ta = el('textarea'); ta.maxLength = 300; ta.placeholder = 'Reply (optional, shown under public notes)'; ta.value = e.reply || '';
+      rp.appendChild(ta); c.appendChild(rp);
+      var a = el('div', 'acts');
+      a.appendChild(e.approved ? btn('Hide', '', function () { act(e.id, { action: 'hide' }); }) : btn('Approve', 'primary', function () { act(e.id, { action: 'approve' }); }));
+      a.appendChild(btn('Save reply', '', function () { act(e.id, { action: 'reply', reply: ta.value }); }));
+      a.appendChild(btn('Delete', 'danger', function (ev) {
+        var b = ev.currentTarget; if (b.dataset.sure) { act(e.id, { action: 'delete' }); return; }
+        b.dataset.sure = '1'; b.textContent = 'Tap again to delete'; setTimeout(function () { delete b.dataset.sure; b.textContent = 'Delete'; }, 3000);
+      }));
+      c.appendChild(a); L.appendChild(c);
+    });
+  }
+  $('login').addEventListener('submit', function (e) {
+    e.preventDefault(); token = $('tok').value.trim(); if (!token) return;
+    try { sessionStorage.setItem('gb-admin', token); } catch (_) {}
+    load();
+  });
+  document.querySelectorAll('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () { filter = b.getAttribute('data-f'); document.querySelectorAll('.tabs button').forEach(function (x) { x.classList.toggle('on', x === b); }); render(); });
+  });
+  $('refresh').addEventListener('click', load);
+  $('out').addEventListener('click', function () { token = ''; try { sessionStorage.removeItem('gb-admin'); } catch (_) {} $('app').hidden = true; $('login').hidden = false; $('tok').value = ''; });
+  if (token) load();
+})();
+</script>
+</body>
+</html>
