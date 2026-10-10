@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minsuk Jun</title>
+<meta name="description" content="Minsuk Jun (전민석), undergraduate researcher in continuous-variable photonic quantum computing. Q-SPIN Lab, Seoul National University · Sungkyunkwan University.">
+<link rel="canonical" href="https://minsukjun.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://minsukjun.com/">
+<meta property="og:site_name" content="Minsuk Jun">
+<meta property="og:title" content="Minsuk Jun">
+<meta property="og:description" content="Photonic quantum computing research at Q-SPIN Lab, Seoul National University.">
+<meta property="og:image" content="https://minsukjun.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Minsuk Jun, an LTOI photonic chip with red ridge waveguides">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Minsuk Jun">
+<meta name="twitter:description" content="Photonic quantum computing research at Q-SPIN Lab, Seoul National University.">
+<meta name="twitter:image" content="https://minsukjun.com/img/og.png">
+<meta name="theme-color" content="#000000">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#1d1d1f; --ink-muted:#6e6e73; --ink-48:#7a7a7a;
+    --white:#ffffff; --parchment:#f5f5f7;
+    --tile-1:#272729; --tile-2:#2a2a2c; --tile-3:#252527; --black:#000000;
+    --hairline:#e0e0e0; --hairline-dark:#3a3a3c;
+    --blue:#0066cc; --sky:#2997ff; --muted-dark:#cccccc;
+    --radius-card:18px; --maxw:980px; --gutter:22px;
+    --font:-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:var(--font);color:var(--ink);background:var(--white);font-size:17px;line-height:1.47;letter-spacing:-0.022em;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  img{max-width:100%;display:block}
+  sub,sup{line-height:0}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+  section{padding:100px 0}
+  .s-white{background:var(--white)}
+  .s-parch{background:var(--parchment)}
+  .s-dark{background:var(--tile-1);color:#fff}
+  .s-black{background:var(--black);color:#fff}
+
+  /* ---------- Type scale ---------- */
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+  .s-dark .eyebrow,.s-black .eyebrow{color:var(--sky)}
+  .h-hero{font-size:clamp(40px,7vw,72px);font-weight:600;line-height:1.05;letter-spacing:-0.015em}
+  .h-section{font-size:clamp(32px,5vw,48px);font-weight:600;line-height:1.08;letter-spacing:-0.003em}
+  .h-sub{font-size:clamp(24px,3vw,32px);font-weight:600;line-height:1.12;letter-spacing:.004em}
+  .lead{font-size:clamp(19px,2.4vw,24px);font-weight:400;line-height:1.33;letter-spacing:.009em;color:var(--ink-muted);margin-top:16px;max-width:720px}
+  .s-dark .lead,.s-black .lead{color:var(--muted-dark)}
+  .h-card{font-size:21px;font-weight:600;line-height:1.19;letter-spacing:.011em}
+  .fine{font-size:12px;line-height:1.33;letter-spacing:-0.01em;color:var(--ink-48)}
+  .sec-head{margin-bottom:56px}
+
+  /* ---------- Nav ---------- */
+  nav{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.8);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:48px;gap:24px}
+  nav .brand{color:#f5f5f7;font-size:15px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap}
+  nav .brand:hover{text-decoration:none}
+  nav .links{display:flex;gap:26px;overflow-x:auto;scrollbar-width:none}
+  nav .links::-webkit-scrollbar{display:none}
+  nav .links a{color:#d2d2d7;font-size:12px;letter-spacing:-0.01em;white-space:nowrap;transition:color .2s}
+  nav .links a:hover{color:#fff;text-decoration:none}
+
+  /* ---------- Buttons ---------- */
+  .btns{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px}
+  .btn-pill{display:inline-block;background:var(--blue);color:#fff;font-size:17px;padding:11px 22px;border-radius:980px;transition:transform .15s,background .2s}
+  .btn-pill:hover{background:#0077ed;text-decoration:none}
+  .btn-pill:active{transform:scale(.95)}
+  .btn-link{font-size:17px;color:var(--sky)}
+  .btn-link::after{content:" ›"}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:110px 0 64px;text-align:center;color:#fff;background:transparent}
+  .hero .lead{margin-left:auto;margin-right:auto}
+  .hero .btns{justify-content:center}
+  .hero-meta{margin-top:40px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 28px}
+  .hero-meta span{font-size:14px;color:#86868b}
+  .qlink{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:3px;transition:color .2s}
+  .qlink:hover{color:#fff;text-decoration-color:#fff}
+
+  .hero-stage-wrap{max-width:1240px;margin:56px auto 0;padding:0 var(--gutter)}
+  .hero-stage{position:relative;text-align:left}
+  .gl-area{position:relative;width:100%;height:clamp(420px,44vw,580px);cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+  .gl-area.dragging,.chip-slot.dragging{cursor:grabbing}
+    svg.leaders{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+  .clabel{position:absolute;left:0;top:0;font-size:11px;letter-spacing:.02em;color:#86868b;white-space:nowrap;pointer-events:none;z-index:2}
+  .wcards{position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,4vw,80px);padding:0 clamp(0px,8vw,120px);z-index:3}
+  .wcard{background:rgba(28,28,30,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:10px 10px 12px;opacity:calc(.32 + .68 * var(--m,0));transition:border-color .4s;max-width:180px;justify-self:center;width:100%}
+  .wcard.on{border-color:color-mix(in srgb, var(--c) 55%, transparent)}
+  .wcard canvas{display:block;width:100%;aspect-ratio:1/1;border-radius:8px;background:#0e0e10}
+  .wcard .wl{display:flex;align-items:center;gap:7px;margin-top:9px;font-size:12px;font-weight:600;color:#f5f5f7;letter-spacing:-0.01em}
+  .wcard .wl i{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none;box-shadow:0 0 calc(10px * var(--m,0)) var(--c)}
+  .wcard .ws{font-size:11px;color:#86868b;margin-top:2px}
+  .hsteps{display:flex;justify-content:center;gap:8px;margin-top:22px;flex-wrap:wrap}
+  .hstep{font-size:12px;padding:5px 12px;border-radius:980px;border:1px solid var(--hairline-dark);color:#86868b;transition:all .4s}
+  .hstep.on{color:#f5f5f7;border-color:#5a5a5e}
+  .hstep.now{background:#f5f5f7;color:#1d1d1f;border-color:#f5f5f7}
+  .hcaption{text-align:center;color:var(--muted-dark);font-size:15px;margin:14px auto 0;max-width:620px;min-height:2.9em}
+  .nogl .gl-area{display:none}
+  .nogl .wcards{position:static;margin-top:8px}
+
+  /* ---------- Cards ---------- */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{background:var(--white);border:1px solid var(--hairline);border-radius:var(--radius-card);padding:32px 28px}
+  .s-white .card{background:var(--parchment);border-color:transparent}
+  .card .num{font-size:14px;font-weight:600;color:var(--blue);margin-bottom:18px}
+  .card p{font-size:15px;line-height:1.47;color:var(--ink-muted);margin-top:10px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+  .tag{font-size:12px;padding:4px 10px;border-radius:980px;border:1px solid var(--hairline);color:var(--ink-muted);background:var(--white)}
+
+  /* ---------- Fixed WebGL layer ---------- */
+  html,body{background:#000}
+  #gl-fixed{position:fixed;inset:0;z-index:0;background:#000;pointer-events:none}
+  #gl-fixed canvas{width:100%;height:100%;display:block}
+  header,section,footer{position:relative;z-index:1}
+  .hhint{text-align:center;font-size:12px;color:#6e6e73;margin-top:6px}
+
+  /* ---------- Selected figures (pinned) ---------- */
+  .scrolly{height:660vh;background:transparent;color:#fff}
+  .sc-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+  .sc-title{position:absolute;left:max(var(--gutter),4vw);top:84px;z-index:3;transition:opacity .5s}
+  .design .sc-title{opacity:0}
+  .sc-title .h-sub{color:#f5f5f7}
+  .chip-slot{position:absolute;left:0;top:0;z-index:2;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+  .sc-panels{position:absolute;right:4vw;top:50%;width:38vw;max-width:560px;z-index:3}
+  .sc-panel{position:absolute;left:0;right:0;top:0;transform:translate(48px,-50%);opacity:0;transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+  .sc-panel.on{opacity:1;transform:translate(0,-50%);pointer-events:auto}
+  .sc-fig{background:#fff;border-radius:var(--radius-card);padding:clamp(10px,1.4vw,18px)}
+  .sc-fig img{width:100%;height:auto}
+  .sc-fig-sq{max-width:420px}
+  .sc-k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-top:22px}
+  .sc-panel h3{font-size:clamp(22px,2.2vw,28px);font-weight:600;line-height:1.14;letter-spacing:.006em;margin-top:8px}
+  .sc-panel p:not(.sc-k){font-size:15px;line-height:1.5;color:#a1a1a6;margin-top:10px}
+  .sc-design{position:absolute;left:50%;top:56vh;width:min(680px,calc(100vw - 32px));transform:translate(-50%,36px);opacity:0;transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);background:var(--tile-1);border:1px solid var(--hairline-dark);border-radius:var(--radius-card);padding:clamp(24px,3vw,40px);text-align:center;z-index:3;pointer-events:none}
+  .sc-design.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+  .sc-design h3{font-size:clamp(28px,3.4vw,40px);font-weight:600;line-height:1.1;letter-spacing:-0.003em}
+  .sc-design p:not(.eyebrow){font-size:16px;color:var(--muted-dark);margin-top:14px;line-height:1.5}
+  .sc-design .eq{display:inline-block;font-size:15px;color:#fff;margin-top:20px;padding:10px 18px;border:1px solid var(--hairline-dark);border-radius:10px;background:var(--tile-2)}
+  svg.callouts{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+  svg.callouts path.link{fill:none;stroke:#2997ff;stroke-width:1.4;stroke-dasharray:4 4}
+  svg.callouts circle.lk{fill:#2997ff}
+  svg.callouts line{stroke:#ff453a;stroke-width:1.4}
+  svg.callouts circle{fill:#ff453a}
+  .callout{position:absolute;left:0;top:0;z-index:3;font-size:12px;font-weight:600;color:#f5f5f7;background:rgba(28,28,30,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,69,58,.55);border-radius:980px;padding:5px 11px;white-space:nowrap;opacity:0;transition:opacity .5s;pointer-events:none}
+  .callout em{font-style:normal;font-weight:400;color:#a1a1a6;margin-left:6px}
+  .callout.on{opacity:1}
+  .callout b{font-weight:600;color:var(--sky);margin-right:6px}
+  .callout.cg{border-color:rgba(255,159,10,.6)}
+  .callout.cb{border-color:rgba(41,151,255,.6)}
+  .catbadge{position:absolute;left:0;top:0;z-index:3;width:44px;height:24px;padding:3px 4px;border-radius:8px;background:rgba(28,28,30,.82);border:1px solid rgba(255,159,10,.55);opacity:0;transition:opacity .4s;pointer-events:none}
+  .catbadge.on{opacity:1}
+  .catbadge svg{width:100%;height:100%;display:block}
+  .catbadge path{fill:none;stroke:#ff9f0a;stroke-width:2;stroke-linecap:round}
+  .sc-sub{display:grid}
+  .sc-sub>*{grid-area:1/1;opacity:0;transition:opacity .5s}
+  .sc-sub>.on{opacity:1}
+  .sc-fig.sc-sub{max-width:460px}
+  .subdots{display:flex;gap:6px;margin-top:14px}
+  .subdots i{width:18px;height:3px;border-radius:2px;background:#48484a;transition:background .3s}
+  .subdots i.on{background:#2997ff}
+  .sc-dots{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+  .sc-dots i{width:6px;height:6px;border-radius:50%;background:#48484a;transition:background .3s,transform .3s}
+  .sc-dots i.on{background:#f5f5f7;transform:scale(1.25)}
+  .nogl .chip-slot,.nogl .callout,.nogl svg.callouts{display:none}
+
+  /* ---------- Playground ---------- */
+  .pg-box{display:grid;grid-template-columns:1fr 320px;background:var(--white);border-radius:var(--radius-card);overflow:hidden}
+  .pg-stage{position:relative;height:540px;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;background:radial-gradient(120% 90% at 40% 30%,#ffffff 0%,#f3f5f9 100%)}
+  .pg-stage.dragging{cursor:grabbing}
+  .pg-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .pg-lab{position:absolute;left:0;top:0;font-size:14px;font-weight:600;font-style:italic;color:var(--ink-muted);pointer-events:none;white-space:nowrap}
+  .pg-lab-m{font-size:13px;color:#0a64d8}
+  .pg-hint{position:absolute;left:16px;bottom:12px;font-size:12px;color:var(--ink-48)}
+  .pg-ctrl{padding:28px 26px;border-left:1px solid var(--hairline);display:flex;flex-direction:column;gap:20px}
+  .pg-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .pg-presets button,.pg-seg button{font:inherit;font-size:13px;border:1px solid var(--hairline);background:var(--white);color:var(--ink);border-radius:980px;padding:7px 0;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .15s}
+  .pg-presets button:active,.pg-seg button:active{transform:scale(.95)}
+  .pg-presets button.on,.pg-seg button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .pg-row{display:grid;grid-template-columns:1fr auto;align-items:baseline;row-gap:10px}
+  .pg-k{font-size:14px;font-weight:600}
+  .pg-v{font-size:14px;color:var(--ink-muted);font-variant-numeric:tabular-nums}
+  .pg-row input[type=range]{grid-column:1/-1;-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:linear-gradient(to right,var(--blue) 0,var(--blue) var(--f,50%),#d2d2d7 var(--f,50%));outline:none;margin:4px 0}
+  .pg-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:.5px solid rgba(0,0,0,.04);box-shadow:0 1px 4px rgba(0,0,0,.25);cursor:pointer}
+  .pg-row input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:none;box-shadow:0 1px 4px rgba(0,0,0,.25);cursor:pointer}
+  .pg-seg{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .pg-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;margin-top:auto;padding-top:20px;border-top:1px solid var(--hairline)}
+  .pg-stats dt{font-size:12px;color:var(--ink-muted)}
+  .pg-stats dd{font-size:24px;font-weight:600;letter-spacing:-0.01em;color:var(--ink);font-variant-numeric:tabular-nums;margin-top:2px}
+  .pg-note{font-size:13px;color:var(--ink-muted);margin-top:16px;max-width:760px;line-height:1.5}
+  .pg.nogl .pg-stage{display:none}
+  .pg.nogl .pg-box{grid-template-columns:1fr}
+
+  /* ---------- Moments ---------- */
+  .mo-teaser{display:grid;grid-template-columns:1.1fr 1fr;align-items:stretch;background:var(--parchment);border-radius:var(--radius-card);overflow:hidden;min-height:440px}
+  .mo-tx{padding:56px 48px;display:flex;flex-direction:column;justify-content:center}
+  .mo-sub{font-size:19px;line-height:1.42;color:var(--ink-muted);margin-top:14px;max-width:380px}
+  .mo-toggle{display:inline-flex;align-items:center;gap:12px;align-self:flex-start;margin-top:30px;font:inherit;font-size:17px;color:#fff;background:var(--blue);border:none;border-radius:980px;padding:11px 14px 11px 22px;cursor:pointer;transition:background .2s,transform .15s}
+  .mo-toggle:hover{background:#0077ed}
+  .mo-toggle:active{transform:scale(.95)}
+  .mo-plus{position:relative;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.22);flex:none}
+  .mo-plus::before,.mo-plus::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:2px;margin:-1px 0 0 -5px;background:#fff;border-radius:1px;transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+  .mo-plus::after{transform:rotate(90deg)}
+  .mo.open .mo-plus::after{transform:rotate(0deg)}
+  .mo-lock{margin-top:28px;max-width:340px}
+  .mo-lock[hidden],.mo-toggle[hidden]{display:none}
+  .mo-lock-l{display:block;font-size:14px;color:var(--ink-muted);margin-bottom:10px}
+  .mo-pw-row{position:relative}
+  .mo-pw-row input{width:100%;font:inherit;font-size:17px;padding:13px 56px 13px 18px;border:1px solid #d2d2d7;border-radius:12px;background:var(--white);color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s;letter-spacing:.12em}
+  .mo-pw-row input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,102,204,.15)}
+  .mo-go{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:1px solid #d2d2d7;background:var(--white);color:var(--ink-muted);font-size:17px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+  .mo-go:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .mo-err{min-height:1.4em;font-size:13px;color:#e30000;margin-top:8px}
+  .mo-lock.busy .mo-go{opacity:.4;pointer-events:none}
+  .mo-lock.shake .mo-pw-row{animation:mo-shake .4s}
+  @keyframes mo-shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+  .mo-cover{position:relative;min-height:320px}
+  .mo-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+  .mo-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s cubic-bezier(.2,.7,.2,1),opacity .5s;opacity:0}
+  .mo.open .mo-panel{grid-template-rows:1fr;opacity:1}
+  .mo-inner{overflow:hidden;min-height:0}
+  .mo-bar{display:flex;justify-content:flex-end;padding-top:36px;padding-bottom:20px}
+  .mo-nav{display:flex;gap:12px}
+  .mo-btn,.mo-lb-btn,.mo-x{width:44px;height:44px;border-radius:50%;border:none;background:rgba(210,210,215,.64);color:var(--ink);font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s,opacity .2s}
+  .mo-btn:hover{background:rgba(210,210,215,.9)}
+  .mo-btn:active,.mo-lb-btn:active,.mo-x:active{transform:scale(.95)}
+  .mo-btn:disabled{opacity:.35;cursor:default}
+  .mo-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:max(var(--gutter),calc((100vw - var(--maxw))/2 + var(--gutter)));padding:4px max(var(--gutter),calc((100vw - var(--maxw))/2 + var(--gutter))) 24px;scrollbar-width:none;outline:none}
+  .mo-track::-webkit-scrollbar{display:none}
+  .mo-card{flex:none;scroll-snap-align:start;width:330px}
+  .mo-card.wide{width:587px}
+  .mo-img{display:block;width:100%;height:440px;padding:0;border:none;border-radius:var(--radius-card);overflow:hidden;cursor:zoom-in;background:var(--parchment)}
+  .mo-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .mo-img:hover img{transform:scale(1.03)}
+  .mo-card figcaption{font-size:14px;line-height:1.43;color:var(--ink-muted);margin-top:14px;padding-right:12px}
+  .mo-k{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
+  .mo-lb{position:fixed;inset:0;z-index:200;font-family:var(--font);background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;gap:16px;padding:24px}
+  .mo-lb[hidden]{display:none}
+  .mo-lb figure{max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;align-items:center}
+  .mo-lb img{max-width:100%;max-height:calc(100vh - 140px);border-radius:12px;object-fit:contain}
+  .mo-lb figcaption{color:#d2d2d7;font-size:14px;margin-top:14px;text-align:center}
+  .mo-lb figcaption b{color:#fff;font-weight:600;margin-right:8px}
+  .mo-lb-btn,.mo-x{background:rgba(255,255,255,.14);color:#fff;flex:none}
+  .mo-lb-btn:hover,.mo-x:hover{background:rgba(255,255,255,.26)}
+  .mo-x{position:absolute;top:18px;right:18px}
+
+  /* ---------- Logos ---------- */
+  .logo{width:56px;height:56px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;border:1px solid var(--hairline)}
+  .logo img{width:78%;height:78%;object-fit:contain}
+  .logo .fb{display:none;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--ink)}
+  .logo.fallback .fb{display:block}
+  .s-dark .logo{border-color:transparent}
+
+  /* ---------- Experience (dark) ---------- */
+  .xp{display:flex;flex-direction:column;gap:20px}
+  .xp-item{background:var(--tile-2);border:1px solid var(--hairline-dark);border-radius:var(--radius-card);padding:36px 36px 34px;display:grid;grid-template-columns:200px 1fr;gap:32px}
+  .xp-item.feature{background:var(--tile-3)}
+  .xp-when{font-size:14px;color:#86868b;line-height:1.5}
+  .xp-when .logo{margin-bottom:18px}
+  .xp-when b{display:block;color:var(--sky);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .xp-role{font-size:24px;font-weight:600;letter-spacing:.009em;line-height:1.17}
+  .xp-org{font-size:17px;color:var(--muted-dark);margin-top:4px}
+  .xp-body ul{list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:12px}
+  .xp-body li{font-size:15px;line-height:1.5;color:#e8e8ed;padding-left:18px;position:relative}
+  .xp-body li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--sky)}
+  .xp-body li em{font-style:normal;color:#fff;font-weight:600}
+  .xp-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+  .xp-tools span{font-size:12px;padding:4px 10px;border-radius:980px;border:1px solid var(--hairline-dark);color:var(--muted-dark)}
+
+  /* ---------- Education ---------- */
+  .edu{display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:start}
+  .portrait{position:sticky;top:88px}
+  .portrait img{width:100%;aspect-ratio:413/531;object-fit:cover;border-radius:var(--radius-card);box-shadow:3px 3px 20px rgba(0,0,0,.22)}
+  .portrait .pn{margin-top:18px;font-size:21px;font-weight:600;letter-spacing:.011em}
+  .portrait .pk{font-size:15px;color:var(--ink-muted);margin-top:2px}
+  .rows{border-top:1px solid var(--hairline)}
+  .row{display:grid;grid-template-columns:56px 1fr;gap:24px;padding:30px 0;border-bottom:1px solid var(--hairline);align-items:start}
+  .row .when{font-size:13px;color:var(--ink-muted);margin-bottom:6px}
+  .row .what{font-size:21px;font-weight:600;letter-spacing:.011em;line-height:1.2}
+  .row .sub{font-size:15px;color:var(--ink-muted);margin-top:6px;line-height:1.47}
+
+  /* ---------- Projects ---------- */
+  .proj{display:flex;flex-direction:column;justify-content:space-between;min-height:300px}
+  .proj .kind{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-48);margin-bottom:12px}
+
+  /* ---------- Skills ---------- */
+  .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+  .skills h4{font-size:14px;font-weight:600;margin-bottom:14px;color:var(--ink)}
+  .skills ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .skills li{font-size:15px;color:var(--ink-muted)}
+
+  /* ---------- Contact ---------- */
+  .contact{text-align:center;padding:140px 0}
+  .contact .lead{margin-left:auto;margin-right:auto}
+  .mail{display:inline-flex;align-items:center;gap:10px;margin-top:40px;font-size:clamp(20px,3vw,28px);font-weight:600;color:#fff;letter-spacing:-0.01em}
+  .mail:hover{color:var(--sky);text-decoration:none}
+  .socials{display:flex;justify-content:center;gap:28px;margin-top:34px;flex-wrap:wrap}
+  .socials a{color:var(--sky);font-size:15px}
+  .socials a::after{content:" ↗";font-size:13px}
+  footer{background:var(--parchment);padding:22px 0}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:860px){
+    .mo-card{width:250px}
+    .mo-card.wide{width:min(445px,calc(100vw - 56px))}
+    .mo-img{height:334px}
+    .mo-nav{display:none}
+    .mo-bar{padding-top:24px;padding-bottom:4px}
+    .mo-teaser{grid-template-columns:1fr;min-height:0}
+    .mo-cover{order:-1;height:300px;min-height:0}
+    .mo-tx{padding:30px 24px 32px}
+    .mo-lb-btn{display:none}
+    .pg-box{grid-template-columns:1fr}
+    .pg-stage{height:310px}
+    .pg-ctrl{border-left:none;border-top:1px solid var(--hairline);padding:22px 18px}
+    section{padding:72px 0}
+    .grid-3{grid-template-columns:1fr}
+    .xp-item{grid-template-columns:1fr;gap:12px;padding:28px 24px}
+    .xp-when{display:flex;align-items:center;gap:14px}
+    .xp-when .logo{margin-bottom:0}
+    .skills{grid-template-columns:1fr;gap:28px}
+    .edu{grid-template-columns:1fr;gap:36px}
+    .portrait{position:static;max-width:220px}
+    .contact{padding:96px 0}
+    nav .brand{font-size:14px}
+    nav .links{gap:18px}
+  }
+  @media (max-width:719px){
+    .hero{padding:84px 0 48px}
+    .hero-stage-wrap{margin-top:36px}
+    .gl-area{height:230px}
+    .wcards{position:static;grid-template-columns:repeat(3,1fr);gap:8px;padding:0;margin-top:8px}
+    .wcard{padding:6px 6px 8px;border-radius:12px}
+    .wcard .wl{font-size:10.5px;gap:5px;margin-top:6px}
+    .wcard .ws{display:none}
+    .clabel{display:none}
+    svg.leaders{display:none}
+    .hhint{display:none}
+    .sc-title{display:none}
+    .sc-panels{left:16px;right:16px;width:auto;max-width:none;top:40vh}
+    .sc-panel{transform:translateY(24px)}
+    .sc-panel.on{transform:none}
+    .sc-k{margin-top:14px}
+    .sc-panel p:not(.sc-k){font-size:13.5px}
+    .sc-design{top:36vh}
+    .callout em{display:none}
+    .sc-fig.sc-sub{max-width:300px}
+    .callout{font-size:10.5px;padding:3px 8px}
+  }
+  @media (max-width:420px){ :root{--gutter:16px} }
+</style>
+</head>
+<body>
+<div id="gl-fixed" aria-hidden="true"><canvas></canvas></div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Minsuk Jun</a>
+    <div class="links">
+      <a href="#research">Research</a>
+      <a href="#playground">Playground</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#moments">Moments</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header id="top" class="hero">
+  <div class="wrap">
+    <p class="eyebrow reveal">Photonic Quantum Computing</p>
+    <h1 class="h-hero reveal">Quantum computers,<br>made of light.</h1>
+    <p class="lead reveal">I'm Minsuk Jun, a senior in Electrical &amp; Electronic Engineering at Sungkyunkwan University, researching continuous-variable photonic quantum computing at Seoul National University.</p>
+    <div class="btns reveal">
+      <a class="btn-pill" href="cv.pdf" target="_blank" rel="noopener">Download CV</a>
+      <a class="btn-link" href="#contact">Get in touch</a>
+    </div>
+    <div class="hero-meta reveal">
+      <span><a class="qlink" href="https://donguknam.com/" target="_blank" rel="noopener">Q-SPIN Lab</a>, Seoul National University</span>
+      <span>Sungkyunkwan University</span>
+      <span>Seoul, Korea</span>
+    </div>
+  </div>
+
+  <div class="hero-stage-wrap">
+    <div id="hero-stage" class="hero-stage" role="img" aria-label="Animated LTOI photonic chip: a pump drives single-pass optical parametric amplification in periodically poled lithium tantalate, photon subtraction heralds two cat states, the cats meet on a beam splitter, and homodyne detection against a local oscillator leaves a GKP-like state at the output. Wigner functions for each stage appear above the chip.">
+      <div class="gl-area" title="Drag to rotate · double-click to reset">
+        <span class="clabel" data-a="pplt">PPLT · single-pass OPA</span>
+        <span class="clabel" data-a="filter">Pump filter</span>
+        <span class="clabel" data-a="snspd">SNSPD herald</span>
+        <span class="clabel" data-a="breeder">Breeder 50:50</span>
+        <span class="clabel" data-a="lo">Local oscillator</span>
+        <span class="clabel" data-a="bhd">Balanced homodyne</span>
+        <span class="clabel" data-a="out">Output</span>
+      </div>
+      <svg class="leaders" aria-hidden="true"></svg>
+      <div class="wcards">
+        <div class="wcard"><canvas></canvas><div class="wl"><i></i>Squeezed</div><div class="ws">Single-pass OPA</div></div>
+        <div class="wcard"><canvas></canvas><div class="wl"><i></i>Cat</div><div class="ws">Photon subtraction</div></div>
+        <div class="wcard"><canvas></canvas><div class="wl"><i></i>GKP-like state</div><div class="ws">Cat ⊗ cat → homodyne</div></div>
+      </div>
+    </div>
+    <div class="hsteps" aria-hidden="true">
+      <span class="hstep">Squeeze</span><span class="hstep">Herald</span><span class="hstep">Breed</span>
+    </div>
+    <p class="hcaption" id="hcaption" aria-live="off"></p>
+    <p class="hhint">Drag the chip to rotate</p>
+  </div>
+</header>
+
+<!-- ============ SELECTED FIGURES (pinned chip) ============ -->
+<section id="research" class="scrolly">
+  <div class="sc-sticky">
+    <div class="sc-title">
+      <p class="eyebrow">Research</p>
+      <h2 class="h-sub">Selected figures</h2>
+    </div>
+    <div class="chip-slot" aria-hidden="true" title="Drag to rotate · double-click to reset"></div>
+
+    <svg class="callouts" aria-hidden="true">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ff453a"/></marker>
+        <marker id="ahb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2997ff"/></marker>
+      </defs>
+      <g></g>
+    </svg>
+    <!-- 01 · phase space: which state lives where -->
+    <span class="callout cg" data-g="0" data-a="sqv"><b>01</b>Squeezed vacuum<em>squeezer</em></span>
+    <span class="callout cg" data-g="0" data-a="catst"><b>02</b>Cat state<em>after photon subtraction</em></span>
+    <span class="callout cg" data-g="0" data-a="bred"><b>03</b>Bred cat<em>after the breeder</em></span>
+    <span class="callout cg" data-g="0" data-a="gkp"><b>04</b>GKP-like<em>next breeding round</em></span>
+    <!-- 03 · loss -->
+    <span class="callout" data-g="2" data-a="squeezer">Squeezer<em>propagation loss</em></span>
+    <span class="callout" data-g="2" data-a="coupler">Edge coupler<em>taper loss</em></span>
+    <span class="callout" data-g="2" data-a="bs">Beam splitter<em>excess loss</em></span>
+    <span class="callout" data-g="2" data-a="snspd">SNSPD<em>detection efficiency</em></span>
+    <span class="callout" data-g="2" data-a="bhd">BHD<em>homodyne efficiency</em></span>
+    <!-- 02 · breeding story -->
+    <span class="callout cg" id="c-cats">Two cat states</span>
+    <span class="callout cb" id="c-after">After the 50:50 BS</span>
+    <span class="callout cb" id="c-bhd">Balanced homodyne · p = 0</span>
+    <span class="callout cb" id="c-herald">Heralded output</span>
+    <span class="catbadge"><svg viewBox="0 0 40 18"><path d="M1 17 C8 17 8 2 12 2 S16 17 20 17 S24 2 28 2 S32 17 39 17"/></svg></span>
+    <span class="catbadge"><svg viewBox="0 0 40 18"><path d="M1 17 C8 17 8 2 12 2 S16 17 20 17 S24 2 28 2 S32 17 39 17"/></svg></span>
+
+    <div class="sc-panels">
+      <article class="sc-panel" data-step="0">
+        <div class="sc-fig"><img src="img/fig-breeding-wigner.webp" alt="Four Wigner functions: squeezed vacuum, cat state, bred cat with three peaks, and a GKP-like state with five peaks spaced by two root pi" width="2394" height="1434"></div>
+        <p class="sc-k">01 · Phase space</p>
+        <h3>From squeezed light to a GKP grid.</h3>
+        <p>Wigner functions (blue positive, red negative) of a squeezed vacuum, a squeezed cat, and the outputs of one and two breeding rounds. Two rounds place five peaks exactly on the 2√π lattice with weights 1 : 4 : 6 : 4 : 1.</p>
+      </article>
+      <article class="sc-panel" data-step="1">
+        <div class="sc-fig sc-sub">
+          <img class="sf on" src="img/fig-breed-a.webp" alt="Two cat states as four blobs in the q1, q2 plane" width="1100" height="880">
+          <img class="sf" src="img/fig-breed-b.webp" alt="After a 50:50 beam splitter the four blobs form a diamond; homodyne integrates along q2 prime" width="1100" height="880">
+          <img class="sf" src="img/fig-breed-c.webp" alt="Heralded output wavefunction with three peaks of weights 1 to 2 to 1" width="1100" height="880">
+        </div>
+        <p class="sc-k">02 · Breeding</p>
+        <div class="sc-sub">
+          <div class="st on"><h3>Two cat states.</h3><p>Each arm carries a cat with peaks at ±2√π in q. Together they make four blobs in the (q₁, q₂) plane.</p></div>
+          <div class="st"><h3>After the 50:50 beam splitter.</h3><p>The beam splitter rotates the (q₁, q₂) plane by 45°, turning the square of blobs into a diamond.</p></div>
+          <div class="st"><h3>Heralded output.</h3><p>Homodyne detection of the upper arm at p = 0 integrates along q₂′. The scan line crosses one, two, then one blob — the lower arm is left with three peaks, weights 1 : 2 : 1.</p></div>
+        </div>
+        <div class="subdots"><i class="on"></i><i></i><i></i></div>
+      </article>
+      <article class="sc-panel" data-step="2">
+        <div class="sc-fig sc-fig-sq"><img src="img/fig-loss.webp" alt="Observed squeezing versus generated squeezing for transmission from 0.5 to 0.99, each curve saturating at a loss-set ceiling" width="1290" height="960"></div>
+        <p class="sc-k">03 · Loss</p>
+        <h3>Every component leaks.</h3>
+        <p>Squeezer propagation, edge couplers, beam splitters and detector efficiency all multiply into one transmission η. Observed squeezing saturates at −10 log₁₀(1 − η), however strong the source.</p>
+      </article>
+    </div>
+
+    <div class="sc-design" data-step="3">
+      <p class="eyebrow">The design question</p>
+      <h3>Low loss is everything.</h3>
+      <p>Past a few dB, more squeezing barely helps — transmission sets the ceiling. So I translate fault-tolerance thresholds into a loss budget for each component on our LTOI chip.</p>
+      <div class="eq">V<sub>obs</sub> = η V + (1 − η)</div>
+    </div>
+
+    <div class="sc-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- ============ RESEARCH INTERESTS ============ -->
+<section id="interests" class="s-white">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Research Interests</p>
+      <h2 class="h-section">Loss is the bottleneck.<br>I want to engineer around it.</h2>
+      <p class="lead">Optical loss limits both discrete- and continuous-variable photonic architectures. My work connects what a fault-tolerant state needs in theory to what each on-chip component must actually deliver.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card reveal">
+        <p class="num">01</p>
+        <h3 class="h-card">CV photonic quantum computing</h3>
+        <p>Squeezed light, cluster states and measurement-based computation on integrated photonic hardware.</p>
+        <div class="tags"><span class="tag">Squeezing</span><span class="tag">Cluster states</span><span class="tag">MBQC</span></div>
+      </div>
+      <div class="card reveal">
+        <p class="num">02</p>
+        <h3 class="h-card">GKP &amp; bosonic codes</h3>
+        <p>Generating GKP states through cat breeding, and deriving the loss, squeezing and detection each component must reach.</p>
+        <div class="tags"><span class="tag">Cat states</span><span class="tag">Breeding</span><span class="tag">Wigner function</span></div>
+      </div>
+      <div class="card reveal">
+        <p class="num">03</p>
+        <h3 class="h-card">Photonic integrated circuits</h3>
+        <p>χ<sup>(2)</sup> thin-film lithium tantalate circuits — single-pass squeezers, beam splitters and pump filters on one chip.</p>
+        <div class="tags"><span class="tag">LTOI</span><span class="tag">PPLT</span><span class="tag">Single-pass OPA</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLAYGROUND ============ -->
+<section id="playground" class="s-parch pg">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Playground</p>
+      <h2 class="h-section">Shape a GKP state.</h2>
+      <p class="lead">Squeeze the light, turn it into a cat, breed it, then let some of it leak away. The surface is the Wigner function, computed exactly in your browser.</p>
+    </div>
+    <div class="pg-box reveal">
+      <div class="pg-stage" title="Drag to rotate, double-click to reset">
+        <canvas aria-label="3D Wigner function W(q,p) with marginal distributions P(q) and P(p) on the walls"></canvas>
+        <span class="pg-lab" data-l="q">q</span>
+        <span class="pg-lab" data-l="p">p</span>
+        <span class="pg-lab pg-lab-m" data-l="pq">P(q)</span>
+        <span class="pg-lab pg-lab-m" data-l="pp">P(p)</span>
+        <span class="pg-hint">Drag to rotate</span>
+      </div>
+      <div class="pg-ctrl">
+        <div class="pg-presets" role="group" aria-label="Presets">
+          <button type="button" data-preset="squeezed">Squeezed</button>
+          <button type="button" data-preset="cat">Cat</button>
+          <button type="button" data-preset="gkp">GKP-like</button>
+        </div>
+        <label class="pg-row"><span class="pg-k">Squeezing</span><span class="pg-v" id="pg-db-v"></span>
+          <input type="range" id="pg-db" min="0" max="12" step="0.1"></label>
+        <label class="pg-row"><span class="pg-k">Cat size α</span><span class="pg-v" id="pg-alpha-v"></span>
+          <input type="range" id="pg-alpha" min="0" max="2.6" step="0.01"></label>
+        <div class="pg-row"><span class="pg-k">Breeding rounds</span>
+          <div class="pg-seg" role="group" aria-label="Breeding rounds">
+            <button type="button" data-breed="0">0</button><button type="button" data-breed="1">1</button><button type="button" data-breed="2">2</button>
+          </div></div>
+        <label class="pg-row"><span class="pg-k">Transmission η</span><span class="pg-v" id="pg-eta-v"></span>
+          <input type="range" id="pg-eta" min="0.5" max="1" step="0.01"></label>
+        <dl class="pg-stats">
+          <div><dt>Wigner negativity</dt><dd id="pg-neg">–</dd></div>
+          <div><dt>Purity</dt><dd id="pg-pur">–</dd></div>
+          <div><dt>Peaks</dt><dd id="pg-pk">–</dd></div>
+          <div><dt>Peak spacing</dt><dd id="pg-sp">–</dd></div>
+        </dl>
+      </div>
+    </div>
+    <p class="pg-note">Even squeezed cats, ideal breeding on a 50:50 beam splitter with p = 0 homodyne, and pure loss on the output state (ħ = 1). Blue is positive, violet is negative. Negativity is ∫|W| − 1.</p>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience" class="s-dark">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Research Experience</p>
+      <h2 class="h-section">From hardware logic<br>to quantum light.</h2>
+    </div>
+
+    <div class="xp">
+      <article class="xp-item feature reveal">
+        <div class="xp-when">
+          <!-- 로고 파일: img/logo-snu.png -->
+          <span class="logo"><img src="img/logo-snu.png" alt="Seoul National University" onerror="this.parentNode.classList.add('fallback');this.remove()"><span class="fb">SNU</span></span>
+          <div><b>Current</b>Jun 2026 - Present</div>
+        </div>
+        <div class="xp-body">
+          <h3 class="xp-role">Research Intern</h3>
+          <p class="xp-org"><a class="qlink" href="https://donguknam.com/" target="_blank" rel="noopener">Q-SPIN Lab</a>, Seoul National University · Prof. Donguk Nam</p>
+          <ul>
+            <li>Responsible for the <em>quantum-theory track</em> of the lab's LTOI chip — cat generation, breeding toward GKP — and for setting the threshold each component must reach.</li>
+            <li>Co-own <em>beam splitter and pump filter</em> design for the tape-out: MMI, directional and adiabatic couplers, and 775/1550 nm pump rejection, modelled with eigenmode (FDE) simulation in Ansys Lumerical MODE.</li>
+            <li>Simulate photonic quantum circuits — photon-pair sources and MZI networks in Perceval, and loss-aware Gaussian-state models of GKP generation.</li>
+            <li>Survey CV quantum computing architectures and presented graph-designed quantum photonics (Bao et al., <i>Nature Photonics</i> 2023) at lab group meeting.</li>
+          </ul>
+          <div class="xp-tools"><span>Lumerical MODE</span><span>Perceval</span><span>The Walrus</span><span>Python</span></div>
+        </div>
+      </article>
+
+      <article class="xp-item reveal">
+        <div class="xp-when">
+          <span class="logo"><img src="img/logo-skku.png" alt="Sungkyunkwan University" onerror="this.parentNode.classList.add('fallback');this.remove()"><span class="fb">SKKU</span></span>
+          <div><b>Undergraduate</b>Feb - Jun 2026</div>
+        </div>
+        <div class="xp-body">
+          <h3 class="xp-role">Undergraduate Researcher — 2D Semiconductors</h3>
+          <p class="xp-org">Prof. Juwon Lee's Lab, SKKU</p>
+          <ul>
+            <li>Studied 2D semiconductor devices and presented a review of MoS<sub>2</sub>-based memory — the first exposure to optoelectronics that turned my focus to quantum photonics.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="xp-item reveal">
+        <div class="xp-when">
+          <span class="logo"><img src="img/logo-skku.png" alt="Sungkyunkwan University" onerror="this.parentNode.classList.add('fallback');this.remove()"><span class="fb">SKKU</span></span>
+          <div><b>Undergraduate</b>Mar - Jul 2025</div>
+        </div>
+        <div class="xp-body">
+          <h3 class="xp-role">Undergraduate Researcher — Digital Hardware</h3>
+          <p class="xp-org">Prof. Tae-wook Kang's Lab, SKKU</p>
+          <ul>
+            <li>Designed an <em>8-bit STFT compute module</em>: profiled value distributions in Python to set the quantization scheme, then implemented it in Verilog.</li>
+          </ul>
+          <div class="xp-tools"><span>Verilog</span><span>Python</span><span>Fixed-point quantization</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section id="education" class="s-white">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Education</p>
+      <h2 class="h-section">Where I've studied.</h2>
+    </div>
+    <div class="edu">
+      <div class="portrait reveal">
+        <img src="img/profile.jpg" alt="Portrait of Minsuk Jun" width="413" height="531">
+        <p class="pn">Minsuk Jun</p>
+        <p class="pk">전민석</p>
+      </div>
+      <div class="rows reveal">
+        <div class="row">
+          <span class="logo"><img src="img/logo-skku.png" alt="Sungkyunkwan University" onerror="this.parentNode.classList.add('fallback');this.remove()"><span class="fb">SKKU</span></span>
+          <div>
+            <div class="when">2020 — Feb 2027 (expected)</div>
+            <div class="what">B.S. Electrical &amp; Electronic Engineering</div>
+            <div class="sub">Sungkyunkwan University, Seoul · GPA 4.20 / 4.5<br>Coursework: Quantum Mechanics, Electromagnetics, Optics, Linear Algebra</div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="logo"><img src="img/logo-ntu.png" alt="Nanyang Technological University" onerror="this.parentNode.classList.add('fallback');this.remove()"><span class="fb">NTU</span></span>
+          <div>
+            <div class="when">Aug - Dec 2025</div>
+            <div class="what">Study Abroad</div>
+            <div class="sub">Nanyang Technological University, Singapore<br>Top of class in Semiconductor Devices and Processing</div>
+          </div>
+        </div>
+        <div class="row">
+          <span class="logo"><img src="img/logo-rokaf.png" alt="Republic of Korea Air Force" onerror="this.parentNode.classList.add('fallback');this.remove()"><span class="fb">ROKAF</span></span>
+          <div>
+            <div class="when">2022 — 2024</div>
+            <div class="what">Military Service</div>
+            <div class="sub">Republic of Korea Air Force · Honorably discharged as Sergeant</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="s-parch">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Selected Projects</p>
+      <h2 class="h-section">Things I've built.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card proj reveal">
+        <div>
+          <p class="kind">Device · 2026</p>
+          <h3 class="h-card">Photonic Circuit Design &amp; Simulation</h3>
+          <p>Beam splitters, pump filters and waveguides for an LTOI tape-out, from mode analysis to circuit-level simulation of sources and interferometer networks.</p>
+        </div>
+        <div class="tags"><span class="tag">Lumerical MODE</span><span class="tag">MMI · DC</span><span class="tag">Perceval</span></div>
+      </div>
+      <div class="card proj reveal">
+        <div>
+          <p class="kind">Theory · 2026</p>
+          <h3 class="h-card">Ideal Quantum Photonic Circuit Theory</h3>
+          <p>The lossless picture of cat generation and breeding: how photon-subtracted cats combine on a beam splitter and homodyne into GKP grid states.</p>
+        </div>
+        <div class="tags"><span class="tag">Cat states</span><span class="tag">Breeding</span><span class="tag">GKP</span></div>
+      </div>
+      <div class="card proj reveal">
+        <div>
+          <p class="kind">Architecture · 2026</p>
+          <h3 class="h-card">CVQC Architecture Research</h3>
+          <p>How measurement-based CV quantum computers are assembled — non-Gaussian state sources, refinement, cluster states — and where optical loss breaks each stage.</p>
+        </div>
+        <div class="tags"><span class="tag">Fault tolerance</span><span class="tag">Loss budget</span><span class="tag">Cluster states</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOMENTS ============ -->
+<section id="moments" class="s-white mo" data-salt="aaxWgb8JQS/HyYVa97LQlg==" data-iter="600000">
+  <div class="wrap">
+    <div class="mo-teaser reveal">
+      <div class="mo-tx">
+        <p class="eyebrow">Moments</p>
+        <h2 class="h-section">Beyond the slides.</h2>
+        <p class="mo-sub">Labs, conferences, an exchange semester, and one kangaroo.</p>
+        <button type="button" class="mo-toggle" aria-expanded="false" aria-controls="mo-panel"><span class="mo-tl">View photos</span><span class="mo-plus" aria-hidden="true"></span></button>
+        <form class="mo-lock" hidden autocomplete="off">
+          <label class="mo-lock-l" for="mo-pw">These are private. Enter the password.</label>
+          <div class="mo-pw-row">
+            <input id="mo-pw" type="password" inputmode="numeric" placeholder="Password" aria-describedby="mo-err">
+            <button type="submit" class="mo-go" aria-label="Unlock">&#8594;</button>
+          </div>
+          <p class="mo-err" id="mo-err" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="mo-cover"><img src="img/moments/australia-kangaroo.webp" alt="Minsuk standing next to a grazing kangaroo in Australia" width="1050" height="1400" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="mo-panel" id="mo-panel" aria-hidden="true">
+   <div class="mo-inner">
+    <div class="wrap mo-bar">
+      <div class="mo-nav">
+        <button type="button" class="mo-btn" data-dir="-1" aria-label="Previous">&#8249;</button>
+        <button type="button" class="mo-btn" data-dir="1" aria-label="Next">&#8250;</button>
+      </div>
+    </div>
+    <div class="mo-track" tabindex="0" aria-label="Photo gallery">
+        <figure class="mo-card wide">
+          <button type="button" class="mo-img" data-i="0" aria-label="Open photo: Sketching the GBS, refinery and QPU pipeline at a lab meeting."><img data-enc="img/moments/lab-whiteboard.enc" alt="Sketching the GBS, refinery and QPU pipeline at a lab meeting." loading="lazy" width="1400" height="1050"></button>
+          <figcaption><span class="mo-k">Q-SPIN Lab, SNU</span>Sketching the GBS, refinery and QPU pipeline at a lab meeting.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="1" aria-label="Open photo: A talk on on-chip generation and measurement of CV entanglement."><img data-enc="img/moments/cqi-2026.enc" alt="A talk on on-chip generation and measurement of CV entanglement." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">CQI 2026</span>A talk on on-chip generation and measurement of CV entanglement.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="2" aria-label="Open photo: Presenting a review of resistive switching in MoS₂ memristors."><img data-enc="img/moments/mos2-review-talk.enc" alt="Presenting a review of resistive switching in MoS₂ memristors." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">SKKU, 2026</span>Presenting a review of resistive switching in MoS₂ memristors.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="3" aria-label="Open photo: Banana milk break on campus."><img data-enc="img/moments/snu-banana-milk.enc" alt="Banana milk break on campus." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">SNU</span>Banana milk break on campus.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="4" aria-label="Open photo: Leading a Verilog study session."><img data-enc="img/moments/verilog-talk.enc" alt="Leading a Verilog study session." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">SKKU</span>Leading a Verilog study session.</figcaption>
+        </figure>
+        <figure class="mo-card wide">
+          <button type="button" class="mo-img" data-i="5" aria-label="Open photo: Teaching an Arduino class for high school students."><img data-enc="img/moments/arduino-outreach.enc" alt="Teaching an Arduino class for high school students." loading="lazy" width="1400" height="1051"></button>
+          <figcaption><span class="mo-k">Outreach</span>Teaching an Arduino class for high school students.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="6" aria-label="Open photo: Robotics hardware on the bench."><img data-enc="img/moments/hardware-bench.enc" alt="Robotics hardware on the bench." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">SIOR</span>Robotics hardware on the bench.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="7" aria-label="Open photo: At the SKKU booth."><img data-enc="img/moments/skku-booth.enc" alt="At the SKKU booth." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">SKKU</span>At the SKKU booth.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="8" aria-label="Open photo: Hiking during the exchange semester at NTU."><img data-enc="img/moments/singapore-hike.enc" alt="Hiking during the exchange semester at NTU." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">Singapore, 2025</span>Hiking during the exchange semester at NTU.</figcaption>
+        </figure>
+        <figure class="mo-card">
+          <button type="button" class="mo-img" data-i="9" aria-label="Open photo: A side trip from Singapore, with a local."><img data-src="img/moments/australia-kangaroo.webp" alt="A side trip from Singapore, with a local." loading="lazy" width="1050" height="1400"></button>
+          <figcaption><span class="mo-k">Australia, 2025</span>A side trip from Singapore, with a local.</figcaption>
+        </figure>
+        <figure class="mo-card wide">
+          <button type="button" class="mo-img" data-i="10" aria-label="Open photo: Out for a walk."><img data-enc="img/moments/walk.enc" alt="Out for a walk." loading="lazy" width="1290" height="719"></button>
+          <figcaption><span class="mo-k">With friends</span>Out for a walk.</figcaption>
+        </figure>
+  </div>
+   </div>
+  </div>
+  <div class="mo-lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <button type="button" class="mo-x" aria-label="Close">&#215;</button>
+    <button type="button" class="mo-lb-btn prev" aria-label="Previous">&#8249;</button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+    <button type="button" class="mo-lb-btn next" aria-label="Next">&#8250;</button>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills" class="s-parch">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Skills &amp; Beyond</p>
+      <h2 class="h-section">Toolbox.</h2>
+    </div>
+    <div class="skills reveal">
+      <div>
+        <h4>Simulation &amp; Code</h4>
+        <ul><li>Python (NumPy, SciPy)</li><li>Ansys Lumerical MODE</li><li>Perceval · The Walrus</li><li>Verilog</li><li>PSpice</li></ul>
+      </div>
+      <div>
+        <h4>Leadership</h4>
+        <ul><li>Vice President, SIOR Robotics Club (SKKU)</li><li>Arduino workshop instructor — education outreach</li><li>Organizer, campus technical seminars</li></ul>
+      </div>
+      <div>
+        <h4>Languages</h4>
+        <ul><li>Korean — Native</li><li>English</li><li>Japanese — JLPT N2</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="s-black contact">
+  <div class="wrap">
+    <p class="eyebrow reveal">Contact</p>
+    <h2 class="h-section reveal">Let's talk photons.</h2>
+    <p class="lead reveal">Open to research collaborations and conversations about photonic quantum hardware. The quickest way to reach me is LinkedIn.</p>
+    <div class="socials reveal">
+      <a href="https://github.com/minsukjun" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=minsuk+jun&amp;btnG=" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="https://www.linkedin.com/in/minsuk-jun" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="fine">© 2026 Minsuk Jun</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function(e){e.classList.add('in')}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script src="js/hero.js"></script>
+<script src="js/wigner-core.js"></script>
+<script src="js/playground.js"></script>
+<script src="js/moments.js"></script>
+</body>
+</html>
