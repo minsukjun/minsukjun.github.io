@@ -137,9 +137,9 @@
   .sc-fig-sq{max-width:420px}
   .wfig.live{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;color:#1d1d1f;letter-spacing:0}
   .wp{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto;margin:0;min-width:0}
-  .wp figcaption{grid-column:1/-1;margin-bottom:8px;line-height:1.25}
-  .wp figcaption b{display:block;font-size:14px;font-weight:600;letter-spacing:-0.01em}
-  .wp figcaption span{display:block;font-size:11.5px;color:#6e6e73;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wp figcaption,.cf figcaption{grid-column:1/-1;margin-bottom:8px;line-height:1.25}
+  .wp figcaption b,.cf figcaption b{display:block;font-size:14px;font-weight:600;letter-spacing:-0.01em}
+  .wp figcaption span,.cf figcaption span{display:block;font-size:11.5px;color:#6e6e73;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .wp-plot{position:relative;aspect-ratio:2/1;border-radius:6px;overflow:hidden;background:#f7f7f7}
   .wp-plot canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
   .wp-plot i{position:absolute;font-size:11px;color:#86868b;font-style:italic;line-height:1}
@@ -152,6 +152,44 @@
   .wp-x span{top:0;transform:translateX(-50%)}
   .wp-y span::after{content:"";position:absolute;right:-6px;top:50%;width:3px;height:1px;background:#c7c7cc}
   .wp-x span::before{content:"";position:absolute;left:50%;top:-5px;width:1px;height:3px;background:#c7c7cc}
+  .sc-fig.live{color:#1d1d1f;letter-spacing:0}
+  .cf{display:grid;grid-template-columns:auto 1fr var(--side,0px);margin:0;min-width:0;--side:96px}
+  .cf figcaption{grid-row:1;margin-bottom:12px}
+  .cf figcaption sub{font-size:.75em}
+  .cf .wp-y{grid-column:1;grid-row:2}
+  .cf-plot{grid-column:2;grid-row:2;position:relative}
+  .cf-side{grid-column:3;grid-row:2;position:relative;display:flex;align-items:center}
+  .cf .wp-x{grid-column:2;grid-row:3}
+  .cf-map .cf-plot{aspect-ratio:1;border-radius:6px;overflow:hidden;background:#f7fbff}
+  .cf-line .cf-plot,.cf-line .wp-x{grid-column:2/4}
+  .cf-line .cf-side{display:none}
+  .cf-plot canvas,.cf-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .cf-svg{overflow:visible}
+  .cf-plot i{position:absolute;font-size:11px;color:#86868b;font-style:italic;line-height:1;white-space:nowrap}
+  .cf-plot .ax-y{left:6px;top:5px}
+  .cf-plot .ax-x{right:7px;bottom:6px}
+  .cf-line .cf-plot .ax-x{bottom:-21px;right:0}
+  .cf-note{font-size:11px;line-height:1.4;color:#0066cc;padding-left:12px}
+  .cf-legend{position:absolute;left:0;top:0;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:11px;color:#1d1d1f}
+  .cf-legend span{display:inline-flex;align-items:center;gap:6px}
+  .cf-legend i{position:static;width:18px;height:0;border-top:2px solid #0066cc}
+  .cf-legend i.lg-dash{border-top:1.5px dashed #86868b}
+  .cf-loss{--side:62px}
+  .cf-loss .cf-plot{aspect-ratio:1.3}
+  .cf-loss .cf-side{display:block}
+  .cf-eta{position:absolute;left:8px;transform:translateY(-50%);font-size:10.5px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .cf-plot .ax-yt{left:8px;top:0;font-style:normal;color:#6e6e73;font-size:10.5px}
+  .cf-plot .ax-ll{left:0;top:0;font-style:normal;font-size:10px;color:#a1a1a6}
+  .cf-xt{grid-column:2;grid-row:4;text-align:center;font-size:11px;color:#6e6e73;margin:2px 0 0}
+  .sc-fig.compact .cf-map{--side:70px}
+  .sc-fig.compact .cf-loss{--side:52px}
+  .sc-fig.compact .cf-note{font-size:9.5px;padding-left:8px}
+  .sc-fig.compact .cf-eta{font-size:9.5px;left:6px}
+  .sc-fig.compact .cf figcaption b{font-size:12.5px}
+  .sc-fig.compact .cf figcaption span{font-size:10.5px}
+  .sc-fig.compact .wp-y{width:24px;margin-right:5px}
+  .sc-fig.compact .wp-y span,.sc-fig.compact .wp-x span{font-size:9px}
+  .sc-fig.compact .cf-legend{font-size:9.5px;gap:2px 10px}
   .wfig.compact{gap:12px 12px}
   .wp figcaption .short,.wfig.compact .wp figcaption .full{display:none}
   .wfig.compact .wp figcaption .short{display:block}
@@ -531,7 +569,7 @@
         <p>Wigner functions (blue positive, red negative) of a squeezed vacuum, a squeezed cat, and the outputs of one and two breeding rounds. Two rounds place five peaks exactly on the 2√π lattice with weights 1 : 4 : 6 : 4 : 1.</p>
       </article>
       <article class="sc-panel" data-step="1">
-        <div class="sc-fig sc-sub">
+        <div class="sc-fig sc-sub" data-fig2 data-alts="Two cat states as four blobs in the q1, q2 plane|After a 50:50 beam splitter the four blobs form a diamond; homodyne integrates along q2 prime|Heralded output wavefunction with three peaks of weights 1 to 2 to 1">
           <img class="sf on" src="img/fig-breed-a.webp" alt="Two cat states as four blobs in the q1, q2 plane" width="1100" height="880">
           <img class="sf" src="img/fig-breed-b.webp" alt="After a 50:50 beam splitter the four blobs form a diamond; homodyne integrates along q2 prime" width="1100" height="880">
           <img class="sf" src="img/fig-breed-c.webp" alt="Heralded output wavefunction with three peaks of weights 1 to 2 to 1" width="1100" height="880">
@@ -545,7 +583,7 @@
         <div class="subdots"><i class="on"></i><i></i><i></i></div>
       </article>
       <article class="sc-panel" data-step="2">
-        <div class="sc-fig sc-fig-sq"><img src="img/fig-loss.webp" alt="Observed squeezing versus generated squeezing for transmission from 0.5 to 0.99, each curve saturating at a loss-set ceiling" width="1290" height="960"></div>
+        <div class="sc-fig sc-fig-sq" data-fig3 data-alt="Observed squeezing versus generated squeezing for transmission from 0.5 to 0.99, each curve saturating at a loss-set ceiling"><img src="img/fig-loss.webp" alt="Observed squeezing versus generated squeezing for transmission from 0.5 to 0.99, each curve saturating at a loss-set ceiling" width="1290" height="960"></div>
         <p class="sc-k">03 · Loss</p>
         <h3>Every component leaks.</h3>
         <p>Squeezer propagation, edge couplers, beam splitters and detector efficiency all multiply into one transmission η. Observed squeezing saturates at −10 log₁₀(1 − η), however strong the source.</p>
@@ -940,6 +978,7 @@
   })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script src="js/figures.js"></script>
 <script src="js/hero.js"></script>
 <script src="js/wigner-core.js"></script>
 <script src="js/wfig.js"></script>
