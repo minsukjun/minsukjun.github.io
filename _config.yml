@@ -1,0 +1,3 @@
+# GitHub Pages build settings. The site itself is plain HTML; this only keeps repo docs off the public site.
+exclude:
+  - README.md

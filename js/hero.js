@@ -356,6 +356,59 @@
     return c;
   }
 
+  /* ---------------- Loss view (step 03): pulses dim at each lossy element and shed light there ---------------- */
+  var LOSS = { cpl: 0.7, sq: 0.8, bs: 0.8, out: 0.78 };
+  function sqT(x) { return 1 - (1 - LOSS.sq) * sstep(-5.4, -1.4, x); }
+  function trans(name, x) {
+    var a = LOSS.cpl * LOSS.sq, b = a * LOSS.bs;
+    switch (name) {
+      case 'in': return lerp(1, LOSS.cpl, sstep(-LX - 0.05, -LX + 0.3, x));
+      case 'armA1': case 'armB1': return LOSS.cpl * sqT(x);
+      case 'armA3': case 'armB3': return a * lerp(1, LOSS.bs, sstep(4.5, 4.8, x));
+      case 'out1': case 'bhd1': case 'bhd2': return b;
+      case 'out2': return b * lerp(1, LOSS.out, sstep(LX - 0.3, LX + 0.05, x));
+      case 'lo': return 1;
+      default: return a;
+    }
+  }
+  // where light leaves: [segment, x where the head crosses (null = end of the segment), fraction lost]
+  var LEAK = [['in', -LX + 0.05, 1 - LOSS.cpl], ['armA1', -3.4, 0.5], ['armB1', -3.4, 0.5], ['armA3', 4.72, 1 - LOSS.bs],
+    ['herA', null, 0.6], ['herB', null, 0.6], ['bhd1', null, 0.5], ['bhd2', null, 0.5], ['out2', LX - 0.02, 1 - LOSS.out]];
+  var ringGeo = new T3.RingGeometry(0.9, 1, 72);
+  var bursts = [];
+  for (var bi = 0; bi < 10; bi++) {
+    var rm = new T3.MeshBasicMaterial({ color: 0xffffff, transparent: true, blending: T3.AdditiveBlending, depthWrite: false, side: T3.DoubleSide, opacity: 0 });
+    var ring = new T3.Mesh(ringGeo, rm); ring.rotation.x = -Math.PI / 2; ring.visible = false; chip.add(ring);
+    var specks = []; for (var sk = 0; sk < 6; sk++) specks.push(sprite());
+    bursts.push({ ring: ring, specks: specks, age: 9, col: C.pump, amp: 1, pos: new T3.Vector3(), dirs: [] });
+  }
+  var burstI = 0;
+  function burst(pos, col, amp) {
+    var b = bursts[burstI = (burstI + 1) % bursts.length], a0 = Math.random() * Math.PI * 2;
+    b.age = 0; b.col = col; b.amp = amp; b.pos.copy(pos);
+    b.dirs = b.specks.map(function (o, i) { var a = a0 + i * Math.PI / 3 + (Math.random() - 0.5) * 0.5; return [Math.cos(a), Math.sin(a), 0.6 + Math.random() * 0.5]; });
+  }
+  function updBursts(dt) {
+    var D = 0.95;
+    bursts.forEach(function (b) {
+      b.age += dt;
+      var on = b.age < D;
+      b.ring.visible = on; b.specks.forEach(function (o) { o.visible = on; });
+      if (!on) return;
+      var f = b.age / D, e = 1 - Math.pow(1 - f, 3), fade = Math.pow(1 - f, 1.4) * b.amp;
+      b.ring.position.set(b.pos.x, Y_SLAB + RIDGE_H + 0.012, b.pos.z);
+      var rs = 0.12 + 0.95 * e; b.ring.scale.set(rs, rs, 1);
+      tint(b.ring, b.col, 0.35); b.ring.material.opacity = 0.9 * fade;
+      b.specks.forEach(function (o, i) {
+        var d = b.dirs[i], r = 1.05 * e * d[2];
+        o.position.set(b.pos.x + d[0] * r, b.pos.y + 0.06 + 0.1 * e, b.pos.z + d[1] * r);
+        var ss = 0.34 * (1 - 0.55 * f); o.scale.set(ss, ss, 1);
+        tint(o, b.col, 0.35); o.material.opacity = fade;
+      });
+    });
+  }
+  var lossMix = 0;
+
   /* ---------------- Anchors ---------------- */
   function V(x, y, z) { return new T3.Vector3(x, y, z); }
   var ANCH = [V(-3.4, 0.06, zA), V(3.75, 0.25, -2.62), V(10.4, 0.05, 1.3)];
@@ -444,6 +497,8 @@
     if (st.step === 1 && st.pEnter > 0.82) { if (!story.on) { story.on = true; story.t0 = tAbs; } st.u1 = reduce ? 0.95 : storyU(tAbs - story.t0); }
     else { story.on = false; st.u1 = 0; }
     var active = setPanels(st), scripted = st.zoom > 0.25 && active === 1;
+    lossMix += ((active === 2 && !reduce ? 1 : 0) - lossMix) * (1 - Math.exp(-rdt * 4));
+    var lm = lossMix > 0.01 ? lossMix : 0;
 
     // camera: gentle hover parallax; a drag rotates directly and springs back on release
     if (!drag.on) {
@@ -470,19 +525,28 @@
       var on = !scripted && t >= p.t0 && t <= p.t1, s = seg[p.seg];
       if (!on) {
         p.sprites.forEach(function (o) { o.visible = false; });
-        if (!scripted && t > p.t1 && !p.fired && p.dev) { p.fired = true; dev[p.dev].glow = 1.4; dev[p.dev].col = p.col; }
+        if (!scripted && t > p.t1 && !p.fired && p.dev) {
+          p.fired = true; dev[p.dev].glow = 1.4 * lerp(1, trans(p.seg, 99), lm); dev[p.dev].col = p.col;
+          if (lm > 0.5) LEAK.forEach(function (L) { if (L[0] === p.seg && L[1] === null) burst(s.curve.getPointAt(1), p.col, (0.55 + L[2]) * lm); });
+        }
+        p.hx = null;
         return;
       }
       var u = (t - p.t0) / (p.t1 - p.t0), head = s.curve.getPointAt(clamp(u, 0, 1)), col = p.col || colorAt(head.x);
+      if (lm > 0.5 && p.hx != null) LEAK.forEach(function (L) {
+        if (L[0] === p.seg && L[1] !== null && p.hx < L[1] && head.x >= L[1]) burst(head, col, (0.55 + L[2]) * lm);
+      });
+      p.hx = head.x;
       for (var k = 0; k < TRAIL; k++) {
         var uk = u - k * 0.11 / s.len, o = p.sprites[k];
         if (uk < 0) { o.visible = false; continue; }
         var pt = k === 0 ? head : s.curve.getPointAt(uk), ck = p.col || colorAt(pt.x), f = 1 - k / TRAIL;
         o.visible = true; o.position.set(pt.x, pt.y, pt.z);
-        var sz = (k === 0 ? 0.95 : 0.62) * (0.35 + 0.65 * f); o.scale.set(sz, sz, 1);
-        tint(o, ck, k === 0 ? 0.45 : 0); o.material.opacity = k === 0 ? 1 : 0.75 * f * f;
+        var Tk = lm ? lerp(1, trans(p.seg, pt.x), lm) : 1;
+        var sz = (k === 0 ? 0.95 : 0.62) * (0.35 + 0.65 * f) * (0.4 + 0.6 * Tk); o.scale.set(sz, sz, 1);
+        tint(o, ck, k === 0 ? 0.45 * Tk * Tk : 0); o.material.opacity = (k === 0 ? 1 : 0.75 * f * f) * (0.12 + 0.88 * Tk);
       }
-      lit.push({ pos: head, col: col });
+      lit.push({ pos: head, col: col, T: lm ? lerp(1, trans(p.seg, head.x), lm) : 1 });
       if (p.seg === 'armA1' || p.seg === 'armB1') {
         var arm = p.seg === 'armA1' ? 0 : 1;
         domains.forEach(function (dm) { if (dm.arm === arm) dm.glow = Math.max(dm.glow, Math.exp(-Math.pow((dm.x - head.x) / 0.45, 2)) * 1.1); });
@@ -501,11 +565,14 @@
         return lerp(5.9, end, sstep(0.70, 0.85, u1));
       };
       var before = u1 < 0.47, colU = before ? C.cat : C.bred;
-      cU = placeCat(sp.up, upper, uAtX(upT, xs(8.15)), colU, before, u1 < 0.86);
+      // signal and LO arrive at the BHD coupler (x = 7.6) at the same moment, then both mixed outputs reach the photodiodes together
+      var mixed = u1 >= 0.79, mixP = sstep(0.79, 0.85, u1);
+      var xU = u1 < 0.70 ? xs(7.6) : mixed ? lerp(7.6, 8.15, mixP) : lerp(5.9, 7.6, sstep(0.70, 0.79, u1));
+      cU = placeCat(sp.up, upper, uAtX(upT, xU), mixed ? C.mix : colU, before, u1 < 0.86);
       cL = placeCat(sp.low, lower, uAtX(loT, xs(9.4)), colU, before, true);
-      var loU = u1 < 0.62 ? -1 : lerp(0.45, 1, sstep(0.62, 0.84, u1));
-      placeCat(sp.lo, loCurve, clamp(loU, 0, 1), C.lo, false, loU >= 0 && u1 < 0.86);
-      if (u1 > 0.84) { dev.pd1.glow = 1; dev.pd1.col = C.mix; dev.pd2.glow = 1; dev.pd2.col = C.mix; }
+      if (mixed) placeCat(sp.lo, seg.bhd2.curve, mixP, C.mix, false, u1 < 0.86);
+      else placeCat(sp.lo, loCurve, sstep(0.62, 0.79, u1), C.lo, false, u1 >= 0.62);
+      if (u1 > 0.85) { dev.pd1.glow = 1; dev.pd1.col = C.mix; dev.pd2.glow = 1; dev.pd2.col = C.mix; }
       if (cU) lit.push({ pos: cU, col: colU });
       lit.push({ pos: cL, col: colU });
       if (!cU) cU = upper.getPointAt(uAtX(upT, 8.15));
@@ -515,8 +582,9 @@
     Object.keys(dev).forEach(function (k) { var v = dev[k], g = Math.min(1, v.glow), c = v.col; v.m.color.setRGB(0.13 + c[0] / 255 * g, 0.13 + c[1] / 255 * g, 0.15 + c[2] / 255 * g); });
     lights.forEach(function (L, i) {
       var a = lit[i];
-      if (a) { L.position.set(a.pos.x, 0.45, a.pos.z); L.color.setRGB(a.col[0] / 255, a.col[1] / 255, a.col[2] / 255); L.intensity = 1.1; } else L.intensity = 0;
+      if (a) { L.position.set(a.pos.x, 0.45, a.pos.z); L.color.setRGB(a.col[0] / 255, a.col[1] / 255, a.col[2] / 255); L.intensity = 1.1 * (a.T == null ? 1 : a.T); } else L.intensity = 0;
     });
+    updBursts(dt);
     renderer.render(scene, camera);
 
     // Wigner cards + stage text
