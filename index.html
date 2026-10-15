@@ -261,7 +261,7 @@
   .pg.nogl .pg-box{grid-template-columns:1fr}
 
   /* ---------- Moments ---------- */
-  .mo-teaser{display:grid;grid-template-columns:1.1fr 1fr;align-items:stretch;background:var(--parchment);border-radius:var(--radius-card);overflow:hidden;min-height:440px}
+  .mo-teaser{display:grid;grid-template-columns:1fr 1.3fr;align-items:stretch;background:var(--parchment);border-radius:var(--radius-card);overflow:hidden;min-height:400px}
   .mo-tx{padding:56px 48px;display:flex;flex-direction:column;justify-content:center}
   .mo-sub{font-size:19px;line-height:1.42;color:var(--ink-muted);margin-top:14px;max-width:380px}
   .mo-toggle{display:inline-flex;align-items:center;gap:12px;align-self:flex-start;margin-top:30px;font:inherit;font-size:17px;color:#fff;background:var(--blue);border:none;border-radius:980px;padding:11px 14px 11px 22px;cursor:pointer;transition:background .2s,transform .15s}
@@ -283,8 +283,12 @@
   .mo-lock.busy .mo-go{opacity:.4;pointer-events:none}
   .mo-lock.shake .mo-pw-row{animation:mo-shake .4s}
   @keyframes mo-shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
-  .mo-cover{position:relative;min-height:320px}
+  .mo-cover{display:grid;grid-template-columns:1fr 1fr;gap:3px;aspect-ratio:3/2}
+  .mo-cover>*{position:relative;display:block;overflow:hidden;min-height:0}
   .mo-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+  .mo-meme{background:#fff;cursor:zoom-in}
+  .mo-meme img{object-fit:contain;object-position:50% 50%;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .mo-meme:hover img{transform:scale(1.03)}
   .mo-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s cubic-bezier(.2,.7,.2,1),opacity .5s;opacity:0}
   .mo.open .mo-panel{grid-template-rows:1fr;opacity:1}
   .mo-inner{overflow:hidden;min-height:0}
@@ -420,7 +424,7 @@
     .mo-nav{display:none}
     .mo-bar{padding-top:24px;padding-bottom:4px}
     .mo-teaser{grid-template-columns:1fr;min-height:0}
-    .mo-cover{order:-1;height:300px;min-height:0}
+    .mo-cover{order:-1}
     .mo-tx{padding:30px 24px 32px}
     .mo-lb-btn{display:none}
     .pg-box{grid-template-columns:1fr}
@@ -834,7 +838,10 @@
           <p class="mo-err" id="mo-err" aria-live="polite"></p>
         </form>
       </div>
-      <div class="mo-cover"><img src="img/moments/australia-kangaroo.webp" alt="Minsuk standing next to a grazing kangaroo in Australia" width="1050" height="1400" loading="lazy"></div>
+      <div class="mo-cover">
+        <div class="mo-kang"><img src="img/moments/australia-kangaroo.webp" alt="Minsuk standing next to a grazing kangaroo in Australia" width="1050" height="1400" loading="lazy"></div>
+        <a class="mo-meme" href="img/moments/gkp-laugh-tale.webp" target="_blank" rel="noopener" aria-label="Open the GKP edit of the Laugh Tale page in a new tab"><img src="img/moments/gkp-laugh-tale.webp" alt="A One Piece page edited so that the pirate laughs on finding GKP (Gottesman–Kitaev–Preskill) states" width="1280" height="1698" loading="lazy"></a>
+      </div>
     </div>
   </div>
   <div class="mo-panel" id="mo-panel" aria-hidden="true">
